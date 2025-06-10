@@ -8,7 +8,6 @@ import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.*;
 import jakarta.servlet.http.*;
-import jakarta.servlet.*;
 import modelo.Usuario;
 import dao.UsuarioDAO;
 import com.google.gson.Gson;
