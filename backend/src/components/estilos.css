@@ -1,0 +1,293 @@
+body {
+    background: #a9a7a8;
+    background: -webkit-linear-gradient(to right, hsla(0, 0%, 100%, 0.3), rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), url("../img/ESLOGAN CONI.png");
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), url("../img/ESLOGAN CONI.png");
+    background-size: 100% 100%;
+    background-position: center;
+    background-attachment: fixed;
+    position: relative;
+    background-repeat: no-repeat;
+    align-content: center;
+}
+
+.encabezado {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.encabezado li button {
+    font-size: 18px;
+    background: none;
+    color: aliceblue;
+    box-shadow: none;
+}
+
+.imagen-encabezado {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.barra-superior {
+    flex: 1;
+    background-color: rgb(230, 45, 45);
+    color: aliceblue;
+    padding: 10px;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 5px;
+    height: 15px;
+}
+
+.barra-superior nav ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    margin: 0;
+    padding: 0;
+}
+
+.barra-superior nav a {
+    color: aliceblue;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.barra-superior nav a:hover {
+    text-decoration: underline;
+}
+
+.textoIndex {
+    font-size: 80px;
+    font-style: italic;
+    font-weight: bold;
+    width: 60%;
+    color: rgb(7, 7, 60);
+    padding-top: 50px;
+    padding-left: 70px;
+}
+
+input {
+    text-align: center;
+    font-size: 14px;
+    width: 250px;
+    height: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px 0 black;
+    margin: 5px;
+}
+
+input:focus {
+    outline: none;
+    border-color: #4a90e2;
+    background-color: #fff;
+}
+
+
+select {
+    font-size: 14px;
+    text-align: center;
+    width: 250px;
+    height: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px 0 black;
+}
+
+button {
+    width: 150px;
+    padding: 4px;
+    margin: 5px;
+    background-color: rgba(240, 248, 255, 0.311);
+    border: none;
+    border-radius: 8px;
+    color: rgb(255, 255, 255);
+    font-style: italic;
+    font-weight: bold;
+    box-shadow: 0 0 3px 0 black;
+    transition: background-color 1s;
+}
+
+button:hover {
+    background-color: rgb(230, 45, 45);
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+button a {
+    text-decoration: none;
+    color: aliceblue;
+}
+
+h4 {
+    color: rgb(7, 7, 60);
+    font-size: 25px;
+    margin-top: 12px;
+    margin-bottom: 5px;
+}
+
+h2 {
+    padding-top: 0;
+    text-align: center;
+    margin-top: 0;
+    font-size: 40px;
+    font-style: italic;
+    font-weight: bold;
+    width: 100%;
+}
+
+/* Estilo del login*/
+.login {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-direction: column;
+}
+
+.login>.inicio-sesion {
+    text-align: center;
+    padding: 10px;
+    border: 2px solid rgb(7, 7, 60);
+    border-radius: 20px;
+    box-shadow: 0 0 3px 0 black;
+    margin-top: 0;
+}
+
+.login h1 {
+    margin-top: 45px;
+    margin-bottom: 0;
+    color: rgb(7, 7, 60);
+    text-align: center;
+    font-size: 42px;
+    font-style: italic;
+    font-weight: bold;
+}
+
+.login h5:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/*estilos perfil usuario*/
+
+.contenido {
+    margin: auto;
+    width: 95%;
+    padding-top: 50px;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.contenido {
+    display: flex;
+    gap: 40px;
+    text-align: center;
+}
+
+.contenido>div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contenido img {
+    border-radius: 35%;
+    height: 150px;
+    width: 150px;
+    margin-bottom: 20px;
+}
+
+/*estilos gestionar equipos*/
+
+.tituloGestionEquipo {
+    margin-top: -2%;
+    text-align: center;
+    font-size: 35px;
+}
+
+.subtituloGestionEquipo {
+    text-align: left;
+    margin-left: 15px;
+    font-size: 25px;
+}
+
+.agregarEquipo {
+    width: 90%;
+    margin: auto;
+    justify-content: center;
+}
+
+.filtrar {
+    margin-top: 15px;
+}
+
+.filtrar .filtrarEquipo {
+    font-size: 20px;
+    margin: 15px;
+}
+
+table {
+    margin: auto;
+    margin-bottom: 20px;
+    width: 95%;
+    border-collapse: collapse;
+    table-layout: auto;
+    background-color: rgba(255, 255, 255, 0.388);
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.acciones {
+    width: 90%;
+    display: flex;
+    gap: 8px;
+    /* puedes ajustar esto para que los botones estén más pegados */
+    justify-content: center;
+    align-items: center;
+}
+
+.editar,
+.eliminar {
+    padding: 4px 8px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+table th,
+table td {
+    border: 1px solid #ccc;
+    padding: 2px;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+table thead {
+    background-color: rgba(230, 45, 45, 0.9);
+    color: aliceblue;
+    font-weight: bold;
+}
+
+
+@media screen and (max-width:500px) {
+    body {
+        display: flex;
+        background-size: auto;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+
+}

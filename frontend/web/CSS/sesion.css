@@ -1,0 +1,128 @@
+body{
+    background: #a9a7a8;
+    background: -webkit-linear-gradient(to right, hsla(0, 0%, 100%, 0.3), rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), url("../img/ESLOGAN CONI.png");
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), url("../img/ESLOGAN CONI.png");
+    background-size: 100% 100%;
+    background-position: center;
+    background-attachment:fixed;
+    position: relative;
+    background-repeat: no-repeat;
+    align-content: center;
+}
+
+.encabezado {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    padding-bottom: 0;
+}
+
+.imagen-encabezado {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.barra-superior {
+    flex: 1;
+    background-color: rgb(230, 45, 45);
+    color: aliceblue;
+    padding: 10px;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 5px;
+    height: 15px;
+}
+
+.barra-superior nav ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    margin: 0;
+    padding: 0;
+}
+
+.barra-superior nav a {
+    color: aliceblue;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.barra-superior nav a:hover {
+    text-decoration: underline;
+}
+
+main{
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-direction: column;
+}
+
+main .inicio-sesion{
+    text-align: center;
+    padding: 10px;
+    border: 2px solid rgb(7, 7, 60);
+    border-radius: 20px;
+    box-shadow: 0 0 3px 0 black;
+}
+
+main h1 {
+    margin-top: 0;
+    color: rgb(7, 7, 60);
+    text-align: center;
+    font-size: 44px;
+    font-style: italic;
+    font-weight: bold;
+}
+
+main h4{
+    color: rgb(7, 7, 60);
+    font-size: 25px;
+    margin-top: 12px;
+    margin-bottom: 5px;
+}
+
+main h5:hover{
+    cursor: pointer;
+    text-decoration: underline;    
+}
+
+main input{
+    width: 250px;
+    height: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px 0 black;
+}
+
+main select{
+    width: 250px;
+    height: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px 0 black;
+}
+
+main button{
+    cursor: pointer;
+    font-style: italic;
+    font-weight: bold;
+    border-radius: 5px;
+    box-shadow: 0 0 3px 0 black;
+    width: 120px;
+    height: 30px;
+}
+
+main button a{
+    text-decoration: none;
+}
+
+main button a:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}

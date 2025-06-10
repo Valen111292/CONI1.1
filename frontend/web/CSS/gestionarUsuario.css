@@ -1,0 +1,374 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 13/05/2025, 5:19:25 p. m.
+    Author     : ansap
+*/
+body{
+    background: #a9a7a8;
+    background: -webkit-linear-gradient(to right, hsla(0, 0%, 100%, 0.3), rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), url("../img/ESLOGAN CONI.png");
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), url("../img/ESLOGAN CONI.png");
+    background-size: 100% 100%;
+    background-position: center;
+    background-attachment:fixed;
+    position: relative;
+    background-repeat: no-repeat;
+    align-content: center;
+}
+
+.encabezado {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    padding-bottom: 0;
+}
+
+.imagen-encabezado {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+}
+
+.barra-superior {
+    flex: 1;
+    background-color: rgb(230, 45, 45);
+    color: aliceblue;
+    padding: 10px;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 5px;
+    height: 15px;
+}
+
+.barra-superior nav ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    margin: 0;
+    padding: 0;
+}
+
+.barra-superior nav a {
+    color: aliceblue;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.barra-superior nav a:hover {
+    text-decoration: underline;
+}
+
+.nuevo-usuario {
+    width: 200px;
+    margin: 25px;
+    padding: 5px;
+    background-color: rgba(240, 248, 255, 0.311);
+    border: none;
+    border-radius: 8px;
+    color: rgb(7, 7, 60);
+    font-size: 18px;
+    font-style: italic;
+    font-weight: bold;
+    box-shadow: 0 0 3px 0 black;
+    transition: background-color 1s;
+}
+
+.nuevo-usuario:hover {
+    background-color: rgb(230, 45, 45);
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.actualizar-usuario {
+    width: 200px;
+    margin: 25px;
+    padding: 5px;
+    background-color: rgba(240, 248, 255, 0.311);
+    border: none;
+    border-radius: 8px;
+    color: rgb(7, 7, 60);
+    font-size: 18px;
+    font-style: italic;
+    font-weight: bold;
+    box-shadow: 0 0 3px 0 black;
+    transition: background-color 1s;
+}
+
+.actualizar-usuario:hover {
+    background-color: rgb(230, 45, 45);
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+header{
+    height: 450px;
+    position: relative;
+    align-content: center;
+}
+
+.botones-principales{
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 15px;
+    margin: auto;
+    background-color: rgba(240, 248, 255, 0.56);
+    box-shadow: 0 0 10px 0 #000000;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+/*seccion nuevo empleado*/
+body .buscar {
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    margin: auto;
+    background-color: rgba(240, 248, 255, 0.56);
+    box-shadow: 0 0 10px 0 #000000;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+body .buscar label {
+    text-align: center;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    color: rgb(7, 7, 60);
+    margin-right: 10px; 
+}
+
+body .buscar input {
+    width: 250px;
+    object-fit: cover;
+    display: block;
+    padding: 5px;
+    margin-right: 10px;
+    border: 1px solid #888;
+    border-radius: 8px;
+    background-color: #e6e6fa;
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+body .buscar input:focus {
+    outline: none;
+    border-color: #4a90e2;
+    background-color: #fff;
+}
+
+body .buscar button {
+    width: 150px;
+    padding: 4px;
+    background-color: rgba(240, 248, 255, 0.311);
+    border: none;
+    border-radius: 8px;
+    color: rgb(7, 7, 60);
+    font-style: italic;
+    font-weight: bold;
+    box-shadow: 0 0 3px 0 black;
+    transition: background-color 1s;
+}
+
+body .buscar button:hover {
+    background-color: rgb(230, 45, 45);
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+main .nuevo-empleado{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    margin: auto;
+    background-color: rgba(240, 248, 255, 0.56);
+    box-shadow: 0 0 10px 0 #000000;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+main .nuevo-empleado h2{
+    text-align: center;
+    color: rgb(7, 7, 60);
+    font-style: italic;
+}
+
+main .nuevo-empleado label {
+    text-align: center;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    color: rgb(7, 7, 60);
+}
+
+main .nuevo-empleado select{
+    width: 400px;
+    object-fit: cover;
+    display: block;
+    padding: 10px;
+    border: 1px solid #888;
+    border-radius: 8px;
+    background-color: #e6e6fa;
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+main .nuevo-empleado select:focus {
+    outline: none;
+    border-color: #4a90e2;
+    background-color: #fff;
+}
+
+main .nuevo-empleado input {
+    width: 400px;
+    object-fit: cover;
+    display: block;
+    padding: 10px;
+    border: 1px solid #888;
+    border-radius: 8px;
+    background-color: #e6e6fa;
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+main .nuevo-empleado input:focus {
+    outline: none;
+    border-color: #4a90e2;
+    background-color: #fff;
+}
+
+.nuevo-empleado form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nuevo-empleado button {
+    width: 150px;
+    padding: 4px;
+    background-color: rgba(240, 248, 255, 0.311);
+    border: none;
+    border-radius: 8px;
+    color: rgb(7, 7, 60);
+    font-style: italic;
+    font-weight: bold;
+    box-shadow: 0 0 3px 0 black;
+    transition: background-color 1s;
+}
+
+main .nuevo-empleado button:hover {
+    background-color: rgb(230, 45, 45);
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/*seccion modificar usuario*/
+
+main .modificar-empleado{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    margin: auto;
+    background-color: rgba(240, 248, 255, 0.56);
+    box-shadow: 0 0 10px 0 #000000;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+main select{
+    width: 400px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px 0 black;
+    padding: 10px;
+    display: block;
+    border: 1px solid #888;
+    border-radius: 8px;
+    background-color: #e6e6fa;
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+main .modificar-empleado h2{
+    text-align: center;
+    color: rgb(7, 7, 60);
+    font-style: italic;
+}
+
+main .modificar-empleado label {
+    text-align: center;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    color: rgb(7, 7, 60);
+}
+
+main .modificar-empleado input {
+    width: 400px;
+    object-fit: cover;
+    display: block;
+    padding: 10px;
+    border: 1px solid #888;
+    border-radius: 8px;
+    background-color: #e6e6fa;
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+main .modificar-empleado input:focus {
+    outline: none;
+    border-color: #4a90e2;
+    background-color: #fff;
+}
+
+.modificar-empleado form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+main .modificar-empleado button {
+    margin-left: 0px;
+    margin-top: 15px;
+    width: 150px;
+    padding: 4px;
+    background-color: rgba(240, 248, 255, 0.311);
+    border: none;
+    border-radius: 8px;
+    color: rgb(7, 7, 60);
+    font-style: italic;
+    font-weight: bold;
+    box-shadow: 0 0 3px 0 black;
+    transition: background-color 1s;
+}
+
+main .modificar-empleado button:hover {
+    background-color: rgb(230, 45, 45);
+    cursor: pointer;
+    text-decoration: underline;
+}
