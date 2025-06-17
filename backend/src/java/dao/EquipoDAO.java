@@ -90,6 +90,32 @@ public class EquipoDAO {
 
         return lista;
     }
+    
+    public List<EquipoVO> listarEquiposPorEstado(String estado) throws SQLException {
+    List<EquipoVO> lista = new ArrayList<>();
+    String sql = "SELECT * FROM equipos_perifericos WHERE estado = ?";
+    try (Connection con = Conexion.getConnection();
+         PreparedStatement ps = con.prepareStatement(sql)) {
+        ps.setString(1, estado.toUpperCase());
+        try (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                EquipoVO e = new EquipoVO();
+                e.setN_inventario(rs.getString("n_inventario"));
+                e.setN_serie(rs.getString("n_serie"));
+                e.setClase(rs.getString("clase"));
+                e.setTipo(rs.getString("tipo"));
+                e.setMarca(rs.getString("marca"));
+                e.setRam(rs.getString("ram"));
+                e.setDisco(rs.getString("disco"));
+                e.setProcesador(rs.getString("procesador"));
+                e.setEstado(rs.getString("estado"));
+                lista.add(e);
+            }
+        }
+    }
+    return lista;
+}
+
 
     public boolean eliminarEquipo(String n_inventario) throws SQLException {
         String sql = "DELETE FROM equipos_perifericos WHERE n_inventario = ?";
