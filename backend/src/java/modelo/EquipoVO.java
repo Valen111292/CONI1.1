@@ -4,6 +4,7 @@ public class EquipoVO {
 
     private String n_inventario;
     private String n_serie;
+    private String tipo;
     private String clase;
     private String marca;
     private String ram;
@@ -16,9 +17,10 @@ public class EquipoVO {
     }
 
     // Constructor completo
-    public EquipoVO(String n_inventario, String n_serie, String clase, String marca, String ram, String disco, String procesador, String estado) {
+    public EquipoVO(String n_inventario, String n_serie, String tipo, String clase, String marca, String ram, String disco, String procesador, String estado) {
         this.n_inventario = n_inventario;
         this.n_serie = n_serie;
+        this.tipo = tipo;
         this.clase = clase;
         this.marca = marca;
         this.ram = ram;
@@ -90,5 +92,13 @@ public class EquipoVO {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public String getTipo() {
+        return tipo;       
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 }
