@@ -64,7 +64,7 @@ function Login() {
         <div className="container textos-sesion">
           <h1>¡Inicia sesión!</h1>
         </div>
-        <form className="inicio-sesion" onSubmit={handleSubmit}>
+        <form className="inicio-sesion" onSubmit={handleSubmit} required>
           <h4>¿Cómo deseas iniciar sesión?</h4>
           <select name="rol" required onChange={handleChange}>
             <option value="">-- Selecciona un rol --</option>

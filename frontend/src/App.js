@@ -7,6 +7,7 @@ import Equipo from './components/equipo';
 import GestionarUsuario from './components/gestionUsuario';
 import NuevoUsuario from './components/nuevoUsuario';
 import ModificarUsuario from './components/modificarUsuario';
+import EmpleadoForm from './components/EmpleadoForm';
 
 function App() {
   // Aquí obtén usuario y rol de donde tengas la info, por ejemplo del estado o contexto
@@ -28,7 +29,7 @@ function App() {
         <Route path='/gestionUsuario' element={<GestionarUsuario />} />
         <Route path='/nuevoUsuario' element={<NuevoUsuario />} />
         <Route path='/modificarUsuario' element={<ModificarUsuario />} />
-        {/* Redirigir a login si no hay usuario logueado */}
+        <Route path='/EmpleadoForm' element={<EmpleadoForm />} />
       </Routes>
     </Router>
   );
