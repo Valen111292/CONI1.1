@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import modelo.ActaDAO;
+import dao.ActaDAO;
 
 @WebServlet("/DescargarPDFServlet")
 public class DescargarPDFServlet extends HttpServlet {

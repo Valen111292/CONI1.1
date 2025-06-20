@@ -1,7 +1,7 @@
 package controlador;
 
 import com.google.gson.Gson;
-import modelo.ActaDAO;
+import dao.ActaDAO;
 import modelo.ActaVO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -30,15 +30,14 @@ public class ActasServlet extends HttpServlet {
         response.setHeader("Access-Control-Allow-Headers", "Content-Type");
         response.setHeader("Access-Control-Allow-Credentials", "true");
 
+        try { // <--- INICIO DEL BLOQUE TRY
         BufferedReader reader = req.getReader();
         Gson gson = new Gson();
         ActaVO acta = gson.fromJson(reader, ActaVO.class);
 
-        // Fecha actual
         String fecha = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         acta.setFecha(fecha);
 
-        // Ruta donde se almacenaría el PDF
         String rutaPdf = "pdfs/Acta_" + acta.getCedula() + ".pdf";
 
         ActaDAO dao = new ActaDAO();
@@ -52,7 +51,13 @@ public class ActasServlet extends HttpServlet {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             response.getWriter().write("{\"mensaje\": \"Error al registrar el acta\"}");
         }
+    } catch (Exception e) { // <--- INICIO DEL BLOQUE CATCH
+        e.printStackTrace(System.err); // Esto imprimirá la pila de la excepción en la consola de Tomcat
+        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        response.setContentType("application/json");
+        response.getWriter().write("{\"mensaje\": \"Error interno del servidor: " + e.getMessage() + "\"}");
     }
+}
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
