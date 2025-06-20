@@ -8,6 +8,7 @@ import GestionarUsuario from './components/gestionUsuario';
 import NuevoUsuario from './components/nuevoUsuario';
 import ModificarUsuario from './components/modificarUsuario';
 import EmpleadoForm from './components/EmpleadoForm';
+import ActaForm from './components/ActaForm';
 
 function App() {
   // Aquí obtén usuario y rol de donde tengas la info, por ejemplo del estado o contexto
@@ -30,6 +31,7 @@ function App() {
         <Route path='/nuevoUsuario' element={<NuevoUsuario />} />
         <Route path='/modificarUsuario' element={<ModificarUsuario />} />
         <Route path='/EmpleadoForm' element={<EmpleadoForm />} />
+        <Route path='/ActaForm' element={<ActaForm />} />
       </Routes>
     </Router>
   );

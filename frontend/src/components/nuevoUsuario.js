@@ -1,11 +1,32 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import logo from "../img/ESLOGAN CONI.png";
 import "./estilos.css";
 
 const NuevoUsuario = () => {
-    const navigate = useNavigate();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const { nombre, cedula, email } = location.state || {};
+
+  const [usuarioData, setUsuarioData] = useState({
+    nombre: nombre || '',
+    cedula: cedula || '',
+    email: email || '',
+    username: cedula || '',
+    contraseña: cedula || ''
+  });
+
+  useEffect(() => {
+    setUsuarioData(prev => ({
+      ...prev,
+      nombre: nombre || '',
+      cedula: cedula || '',
+      email: email || '',
+      username: cedula || prev.nombreUsuario
+    }));
+  }, [nombre, cedula, email]);
 
   useEffect(() => {
     const usuario = localStorage.getItem("usuarioLogueado");
@@ -47,10 +68,14 @@ const NuevoUsuario = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+    setUsuarioData({ ...usuarioData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    console.log("Datos a enviar para crear usuario:", usuarioData);
+    alert("Lógica de creación de usuario (simulado).");
 
     try {
       const response = await fetch("http://localhost:8080/CONI1.0/CrearUsuarioServlet", {
@@ -104,10 +129,10 @@ const NuevoUsuario = () => {
             <h2>Crear usuario</h2>
             <form onSubmit={handleSubmit}>
               <label htmlFor="Nombre">Nombre y apellidos:</label>
-              <input type="text" name="nombre" value={formData.nombre} onChange={handleChange} required />
+              <input type="text" name="nombre" value={usuarioData.nombre} onChange={handleChange} required />
 
               <label htmlFor="Cedula">Cédula:</label>
-              <input type="number" name="cedula" value={formData.cedula} onChange={handleChange} required />
+              <input type="number" name="cedula" value={usuarioData.cedula} onChange={handleChange} required />
 
               <label htmlFor="rol">Rol a desempeñar:</label>
               <select name="rol" value={formData.rol} onChange={handleChange} required>
@@ -117,13 +142,13 @@ const NuevoUsuario = () => {
               </select>
 
               <label htmlFor="username">Usuario:</label>
-              <input type="text" name="username" value={formData.username} onChange={handleChange} required />
+              <input type="text" name="username" value={usuarioData.username} onChange={handleChange} required />
 
               <label htmlFor="email">Correo electrónico:</label>
-              <input type="email" name="email" value={formData.email} onChange={handleChange} required />
+              <input type="email" name="email" value={usuarioData.email} onChange={handleChange} required />
 
               <label htmlFor="password">Contraseña:</label>
-              <input type="password" name="password" value={formData.password} onChange={handleChange} required />
+              <input type="password" name="password" value={usuarioData.contraseña} onChange={handleChange} required />
 
               <button type="submit">Crear usuario</button>
             </form>

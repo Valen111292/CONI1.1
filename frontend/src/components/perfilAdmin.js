@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from '../img/ESLOGAN CONI.png';
+import empleadosGif from '../img/empleados.gif';
 import gestionarUsuarioGif from '../img/gestionar usuario.gif';
 import generarInformeGif from '../img/generar informe.gif';
 import './estilos.css'; // Asegúrate que el CSS esté aquí
@@ -55,6 +56,7 @@ const PerfilAdmin = ({ usuarioLogueado, rol }) => {
 
       <main className="contenido">
         <div className="container gestion-administrador">
+
           <div className="gestion-usuario">
             <a href="/gestionUsuario">
               <img src={gestionarUsuarioGif} alt="Gestionar Usuario" />
@@ -64,6 +66,7 @@ const PerfilAdmin = ({ usuarioLogueado, rol }) => {
               <p>Administra y controla los perfiles de acceso al sistema</p>
             </div>
           </div>
+
           <div className="informe">
             <a href="/generar-informe">
               <img src={generarInformeGif} alt="Generar Informe" />
@@ -73,6 +76,14 @@ const PerfilAdmin = ({ usuarioLogueado, rol }) => {
               <p>Obtener informes detallados sobre el estado del inventario</p>
             </div>
           </div>
+
+          <div className="gestion-empleados">
+            <a href="/EmpleadoForm"><img src={empleadosGif} alt="gestion_empleados" /></a>
+            <div className="container text-empleados">
+              <button><a href="/EmpleadoForm">Empleados</a></button>
+            </div>
+          </div>
+
         </div>
       </main>
     </div>

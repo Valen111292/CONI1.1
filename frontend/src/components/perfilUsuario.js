@@ -69,9 +69,9 @@ const PerfilUsuario = ({ usuarioLogueado, rol }) => {
                 </div>
             </div>
             <div className="gestion-actas">
-                <a href="actas.html"><img src={actaGif} alt="acta"/></a>
+                <a href="/ActaForm"><img src={actaGif} alt="acta"/></a>
                 <div className="container text-actas">
-                    <button><a href="actas.html">Actas</a></button>
+                    <button><a href="/ActaForm">Actas</a></button>
                 </div>
             </div>
             <div className="gestion-empleados">
