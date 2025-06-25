@@ -13,9 +13,10 @@ const NuevoUsuario = () => {
   const [usuarioData, setUsuarioData] = useState({
     nombre: nombre || '',
     cedula: cedula || '',
+    rol: 'estandar',
     email: email || '',
     username: cedula || '',
-    contraseña: cedula || ''
+    password: cedula || ''
   });
 
   useEffect(() => {
@@ -56,18 +57,7 @@ const NuevoUsuario = () => {
     }
   };
 
-  const [formData, setFormData] = useState({
-    nombre: "",
-    cedula: "",
-    rol: "",
-    username: "",
-    email: "",
-    password: ""
-  });
-
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
     setUsuarioData({ ...usuarioData, [e.target.name]: e.target.value });
   };
 
@@ -75,88 +65,83 @@ const NuevoUsuario = () => {
     e.preventDefault();
 
     console.log("Datos a enviar para crear usuario:", usuarioData);
-    alert("Lógica de creación de usuario (simulado).");
 
     try {
       const response = await fetch("http://localhost:8080/CONI1.0/CrearUsuarioServlet", {
         method: "POST",
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
+          "Content-Type": "application/json",
         },
-        body: new URLSearchParams(formData).toString()
+        body: JSON.stringify(usuarioData),
+        credentials: "include"
       });
 
-      if (response.ok) {
+      const data = await response.text(); // O response.json() si tu servlet devuelve JSON
+
+      if (response.ok){
         alert("Usuario creado exitosamente");
-        setFormData({
-          nombre: "",
-          cedula: "",
-          rol: "",
-          username: "",
-          email: "",
-          password: ""
-        });
-      } else {
-        alert("Error al crear el usuario");
-      }
-    } catch (error) {
-      console.error("Error de red:", error);
-      alert("Error de red al crear el usuario");
+        navigate('/EmpleadoForm')
+    } else {
+      alert(`Error al crear usuario: ${data}`);
     }
-  };
+  } catch (error) {
+    console.error("Error de red:", error);
+    alert("Error de red al crear el usuario");
+  }
+};
 
-  return (
-    <div>
-      <section className="encabezado">
-        <img
-          src={logo}
-          alt="Eslogan de CONI - Gestión de inventario"
-          className="imagen-encabezado"
-        />
-        <div className="barra-superior">
-          <nav>
-            <ul>
-              <li><a href="/gestionUsuario">Gestion de usuarios</a></li>
-              <li><button onClick={handleLogout}>Cerrar sesión</button></li>
-            </ul>
-          </nav>
+return (
+  <div>
+    <section className="encabezado">
+      <img
+        src={logo}
+        alt="Eslogan de CONI - Gestión de inventario"
+        className="imagen-encabezado"
+      />
+      <div className="barra-superior">
+        <nav>
+          <ul>
+            <li><a href="/gestionUsuario">Gestion de usuarios</a></li>
+            <li><button onClick={handleLogout}>Cerrar sesión</button></li>
+          </ul>
+        </nav>
+      </div>
+    </section>
+
+    <main>
+      <div className="container gestion-empleado">
+        <div className="nuevo-empleado">
+          <h2>Crear usuario</h2>
+          <form onSubmit={handleSubmit}>
+            <label htmlFor="Nombre">Nombre y apellidos:</label>
+            <input type="text" name="nombre" value={usuarioData.nombre} onChange={handleChange} required />
+
+            <label htmlFor="Cedula">Cédula:</label>
+            <input type="number" name="cedula" value={usuarioData.cedula} onChange={handleChange} required />
+
+            <label htmlFor="rol">Rol a desempeñar:</label>
+            <select name="rol" value={usuarioData.rol} onChange={handleChange} required>
+              <option value="">-- Selecciona un rol --</option>
+              <option value="admin">Administrador</option>
+              <option value="usuario">Usuario</option>
+            </select>
+
+            <label htmlFor="username">Usuario:</label>
+            <input type="text" name="username" value={usuarioData.username} onChange={handleChange} required />
+
+            <label htmlFor="email">Correo electrónico:</label>
+            <input type="email" name="email" value={usuarioData.email} onChange={handleChange} required />
+
+            <label htmlFor="password">Contraseña:</label>
+            <input type="password" name="password" value={usuarioData.password} onChange={handleChange} required />
+
+            <button type="submit">Crear usuario</button>
+          </form>
         </div>
-      </section>
-
-      <main>
-        <div className="container gestion-empleado">
-          <div className="nuevo-empleado">
-            <h2>Crear usuario</h2>
-            <form onSubmit={handleSubmit}>
-              <label htmlFor="Nombre">Nombre y apellidos:</label>
-              <input type="text" name="nombre" value={usuarioData.nombre} onChange={handleChange} required />
-
-              <label htmlFor="Cedula">Cédula:</label>
-              <input type="number" name="cedula" value={usuarioData.cedula} onChange={handleChange} required />
-
-              <label htmlFor="rol">Rol a desempeñar:</label>
-              <select name="rol" value={formData.rol} onChange={handleChange} required>
-                <option value="">-- Selecciona un rol --</option>
-                <option value="admin">Administrador</option>
-                <option value="usuario">Usuario</option>
-              </select>
-
-              <label htmlFor="username">Usuario:</label>
-              <input type="text" name="username" value={usuarioData.username} onChange={handleChange} required />
-
-              <label htmlFor="email">Correo electrónico:</label>
-              <input type="email" name="email" value={usuarioData.email} onChange={handleChange} required />
-
-              <label htmlFor="password">Contraseña:</label>
-              <input type="password" name="password" value={usuarioData.contraseña} onChange={handleChange} required />
-
-              <button type="submit">Crear usuario</button>
-            </form>
-          </div>
-        </div>
-      </main>
-    </div>
-  );
+      </div>
+    </main>
+  </div>
+);
 };
 
 export default NuevoUsuario;

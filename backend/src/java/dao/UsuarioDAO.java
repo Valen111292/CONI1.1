@@ -8,8 +8,6 @@ import modelo.Usuario;
 import java.sql.Connection;
 import java.sql.*;
 import Conexion.Conexion;
-import java.util.List;
-import java.util.ArrayList;
 
 public class UsuarioDAO {
 
@@ -44,31 +42,26 @@ public class UsuarioDAO {
         return usuarios;
     }
 
-    public void insertar(Usuario usuarios) throws Exception {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        try {
-            conn = Conexion.getConnection();
-            String sql = "INSERT INTO usuarios(nombre, cedula, rol, username, email, password) VALUES(?,?,?,?,?,?)";
-            stmt = conn.prepareStatement(sql);
-            stmt.setString(1, usuarios.getNombre());
-            stmt.setString(2, usuarios.getCedula());
-            stmt.setString(3, usuarios.getRol());
-            stmt.setString(4, usuarios.getUsername());
-            stmt.setString(5, usuarios.getEmail());
-            stmt.setString(6, usuarios.getPassword());
-            stmt.executeUpdate();
+    public boolean insertar(Usuario usuarios) {
+        boolean registrado = false;
+        String sql = "INSERT INTO usuarios (nombre, cedula, rol, username, email, password) VALUES (?, ?, ?, ?, ?, ?)"; // Asegúrate que los nombres de las columnas coincidan con tu DB
 
-            System.out.println("Usuario insertado");
+        try (Connection conn = Conexion.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, usuarios.getNombre());
+            ps.setString(2, usuarios.getCedula());
+            ps.setString(3, usuarios.getRol());
+            ps.setString(4, usuarios.getUsername());
+            ps.setString(5, usuarios.getEmail());
+            ps.setString(6, usuarios.getPassword());
 
-        } finally {
-            if (stmt != null) {
-                stmt.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
+            int filasAfectadas = ps.executeUpdate();
+            registrado = filasAfectadas > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Error SQL al insertar usuario: " + e.getMessage());
         }
+        return registrado;
     }
 
     public Usuario buscarPorCedula(String cedula) throws Exception {
@@ -148,4 +141,21 @@ public class UsuarioDAO {
             return false;
         }
     }
+
+    public boolean existeUsuarioConCedula(String cedula) {
+        String sql = "SELECT COUNT(*) FROM usuarios WHERE cedula = ?";
+        try (Connection con = Conexion.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, cedula);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0; // Si el conteo es mayor a 0, la cédula ya existe
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Error SQL al verificar existencia de cédula: " + e.getMessage());
+        }
+        return false; // Por defecto, si hay un error o no se encuentra, asumimos que no existe para evitar bloqueos
+    }
+
 }
