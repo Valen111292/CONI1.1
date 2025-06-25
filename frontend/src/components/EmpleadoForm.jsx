@@ -19,6 +19,10 @@ const EmpleadoForm = () => {
         "Otro" // Opcional: para cargos no listados específicamente
     ];
 
+    const cargoNulo = [
+        "Seleccione un cargo"
+    ];
+
     const [empleadoActual, setEmpleadoActual] = useState({
         id_empleado: null,
         nombre: "",
@@ -309,6 +313,9 @@ const EmpleadoForm = () => {
                             onChange={handleChange}
                             required
                         >
+                            { cargoNulo.map((cargo, index) => (
+                                <option value=""> --- Seleccione un Cargo --- </option>
+                            ))}
                             {cargosDisponibles.map((cargo, index) => (
                                 <option key={index} value={cargo}>{cargo}</option>
                             ))}
