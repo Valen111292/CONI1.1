@@ -7,12 +7,15 @@ import gestionarUsuarioGif from '../img/gestionar usuario.gif';
 import generarInformeGif from '../img/generar informe.gif';
 import './estilos.css'; // Asegúrate que el CSS esté aquí
 
-const PerfilAdmin = ({ usuarioLogueado, rol }) => {
+const PerfilAdmin = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
     const usuario = localStorage.getItem("usuarioLogueado");
-    if (!usuario) {
+    const rol = localStorage.getItem("rol"); // Asegúrate de que el rol esté guardado en localStorage
+
+    // Verifica si el usuario está logueado y si el rol es 'admin'
+    if (!usuario || rol !== "admin") {
       navigate("/login");
     }
   }, [navigate]);
@@ -25,16 +28,23 @@ const PerfilAdmin = ({ usuarioLogueado, rol }) => {
       });
 
       if (response.ok) {
+        // Limpia los datos de sesión y localStorage
         localStorage.removeItem("usuarioLogueado");
         localStorage.removeItem("rol");
-        sessionStorage.clear();
+        sessionStorage.clear(); // Limpia sessionStorage si es necesario
+
+        // Guarda un mensaje de cierre de sesión exitoso
         localStorage.setItem("logoutMessage", "Sesión cerrada exitosamente");
-        navigate("/");
+
+        // Redirige a la página principal y fuerza una recarga completa
+        window.location.href = "/"; // Esto redirige y fuerza una recarga completa
       } else {
         console.error("Error al cerrar sesión, status:", response.status);
+        alert("Error al cerrar sesión. Por favor, inténtalo de nuevo.");
       }
     } catch (error) {
       console.error("Error al cerrar sesión", error);
+      alert("Error de red al cerrar sesión. Por favor, verifica tu conexión.");
     }
   };
 

@@ -1,20 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelo;
 
 import java.sql.Timestamp;
-/**
- *
- * @author ansap
- */
+
 public class Usuario {
 
     private int id;
     private String nombre;
     private String cedula;
     private String rol;
+    private String cargoEmpleado; // Campo para Almacenar el cargo del Empleado
     private String username;
     private String email;
     private String password;
@@ -63,6 +57,14 @@ public class Usuario {
 
     public void setRol(String rol) {
         this.rol = rol;
+    }
+    
+    public String getCargoEmpleado() {
+        return cargoEmpleado;
+    }
+
+    public void setCargoEmpleado(String cargoEmpleado) {
+        this.cargoEmpleado = cargoEmpleado;
     }
 
     public String getUsername() {

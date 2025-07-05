@@ -9,12 +9,14 @@ import computadoraGif from '../img/computadora.gif';
 import genearInformeGif from '../img/generar informe.gif';
 
 
-const PerfilUsuario = ({ usuarioLogueado, rol }) => {
+const PerfilUsuario = () => {
   const navigate = useNavigate();
 
     useEffect(() => {
       const usuario = localStorage.getItem("usuarioLogueado");
-      if (!usuario) {
+      const rol = localStorage.getItem("rol");
+
+      if (!usuario || rol !== "usuario") {
         navigate("/login");
       }
     }, [navigate]);
@@ -29,14 +31,18 @@ const PerfilUsuario = ({ usuarioLogueado, rol }) => {
       if (response.ok) {
         localStorage.removeItem("usuarioLogueado");
         localStorage.removeItem("rol");
-        sessionStorage.clear();
+        sessionStorage.clear(); // Limpia sessionStorage si es necesario
+
+        // Guarda un mensaje de cierre de sesión exitoso
         localStorage.setItem("logoutMessage", "Sesión cerrada exitosamente");
-        navigate("/");
+        window.location.href = "/";
       } else {
         console.error("Error al cerrar sesión, status:", response.status);
+        alert("Error al cerrar sesión. Por favor, inténtalo de nuevo.");
       }
     } catch (error) {
       console.error("Error al cerrar sesión", error);
+      alert("Error de red al cerrar sesión. Por favor, verifica tu conexión.");
     }
   };
 
@@ -63,9 +69,9 @@ const PerfilUsuario = ({ usuarioLogueado, rol }) => {
                 </div>
             </div>
             <div className="gestion-compras">
-                <a href="compras.html"><img src={comprasGif} alt="compras"/></a>
+                <a href="ComprasForm"><img src={comprasGif} alt="compras"/></a>
                 <div className="container text-compras">
-                    <button><a href="compras.html">Compras</a></button>
+                    <button><a href="ComprasForm">Compras</a></button>
                 </div>
             </div>
             <div className="gestion-actas">

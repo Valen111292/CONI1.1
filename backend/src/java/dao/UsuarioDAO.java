@@ -1,45 +1,77 @@
 package dao;
 
-/**
- *
- * @author ansap
- */
 import modelo.Usuario;
+import Conexion.Conexion;
 import java.sql.Connection;
 import java.sql.*;
-import Conexion.Conexion;
 
 public class UsuarioDAO {
 
-    private final String url = "jdbc:mysql://localhost:3306/conibd";
-    private final String user = "root";
-    private final String password = "";
+    private Connection conn;
 
-    public Usuario validar(String username, String passwordIngresada) {
-        Usuario usuarios = null;
+    public UsuarioDAO() {
+    }
+
+    public Usuario validar(String username, String password) {
+        Usuario usuario = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        PreparedStatement psEmpleado = null; // Para la tabla empleados
+        ResultSet rsEmpleado = null; // Para la tabla empleados.
+
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection(url, user, password);
-            String sql = "SELECT * FROM usuarios WHERE username = ? AND password = ?";
-            PreparedStatement ps = con.prepareStatement(sql);
+            conn = Conexion.getConnection();
+            String sql = "SELECT id, nombre, cedula, rol, username, email, password FROM usuarios WHERE username = ? AND password = ?";
+            ps = conn.prepareStatement(sql);
             ps.setString(1, username);
-            ps.setString(2, passwordIngresada);
-            ResultSet rs = ps.executeQuery();
+            ps.setString(2, password);
+            rs = ps.executeQuery();
 
             if (rs.next()) {
-                usuarios = new Usuario();
-                usuarios.setId(rs.getInt("id"));
-                usuarios.setUsername(rs.getString("username"));
-                usuarios.setPassword(rs.getString("password"));
-                usuarios.setRol(rs.getString("rol"));
+                usuario = new Usuario();
+                usuario.setId(rs.getInt("id"));
+                usuario.setNombre(rs.getString("nombre"));
+                usuario.setCedula(rs.getString("cedula"));
+                usuario.setRol(rs.getString("rol")); // Rol de autenticacion (administrador, usuario)
+                usuario.setUsername(rs.getString("username"));
+                usuario.setEmail(rs.getString("email"));
+                usuario.setPassword(rs.getString("password"));
+
+                // LOGICA PARA OBTENER EL CARGO DEL EMPLEADO POR CEDULA
+                String cedulaUsuario = usuario.getCedula();
+                if (cedulaUsuario != null && !cedulaUsuario.isEmpty()) {
+                    String sqlEmpleado = "SELECT cargo FROM empleados WHERE cedula =?";
+                    psEmpleado = conn.prepareStatement(sqlEmpleado);
+                    psEmpleado.setString(1, cedulaUsuario);
+                    rsEmpleado = psEmpleado.executeQuery();
+
+                    if (rsEmpleado.next()) {
+                        usuario.setCargoEmpleado(rsEmpleado.getString("cargo"));
+                    } else {
+                        // SI EL USUARIO EXISTE PERO NO ESTÁ EN LA TABLA DE EMPLEADOS
+                        System.out.println("Advertencia: usuario con cedula" + cedulaUsuario + " no encontrado en la tabla de empleados");
+                        usuario.setCargoEmpleado(null);
+                    }
+                } else {
+                    System.out.println("Advertencia: usuario " + username + " no tiene cedula registrada");
+                    usuario.setCargoEmpleado(null);
+                }
             }
-            rs.close();
-            ps.close();
-            con.close();
         } catch (Exception e) {
             e.printStackTrace();
+            System.err.println("Error de SQL en UsuarioDAO validar: " + e.getMessage());
+        } finally {
+            try {
+                if (rsEmpleado != null) rsEmpleado.close();
+                if (psEmpleado != null) psEmpleado.close();
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            } catch(SQLException e){
+                e.printStackTrace();
+            }
         }
-        return usuarios;
+        return usuario;
     }
 
     public boolean insertar(Usuario usuarios) {

@@ -14,8 +14,8 @@ const EmpleadoForm = () => {
         "Auxiliar de Logistica",
         "Aprendiz",
         "Ejecutivo(a) de Ventas",
-        "Tesorero",
         "Gerente de Distribuciones",
+        "Tesorero",
         "Otro" // Opcional: para cargos no listados específicamente
     ];
 

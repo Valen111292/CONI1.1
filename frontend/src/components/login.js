@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from '../img/ESLOGAN CONI.png';
 import './estilos.css'; // copia tu CSS de sesion.css aquí
 
@@ -8,6 +8,15 @@ function Login() {
     password: '',
     rol: ''
   });
+
+    useEffect(() => {
+    const logoutMessage = localStorage.getItem("logoutMessage");
+    if (logoutMessage) {
+      // Puedes mostrar un mensaje al usuario si lo deseas, por ejemplo:
+      // alert(logoutMessage);
+      localStorage.removeItem("logoutMessage"); // Limpia el mensaje después de leerlo
+    }
+  }, []);
 
   const handleChange = e => {
     setFormData({
@@ -22,28 +31,33 @@ function Login() {
       const response = await fetch('http://localhost:8080/CONI1.0/LoginServlet', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
+          'Content-Type': 'application/json'
         },
         credentials:'include',
-        body: new URLSearchParams(formData)
+        body: JSON.stringify(formData)
       });
 
       const data = await response.json();
 
-      if (data.status === "success") {
-        localStorage.setItem("usuarioLogueado", formData.username);
-        localStorage.setItem("rol", data.rol);
+      // Ajuste aquí: el servlet devuelve 'success' y el rol está dentro de 'data.user.rolAutenticacion'
+      if (data.success) {
+        // Guardar datos en localStorage para persistencia
+        localStorage.setItem("usuarioLogueado", data.user.username);
+        localStorage.setItem("rol", data.user.rolAutenticacion); // Usar rolAutenticacion del servlet
 
-        if (data.rol === "admin") {
+        // Redirigir según el rol
+        if (data.user.rolAutenticacion === "admin") {
           window.location.href = "/perfilAdmin";
         } else {
           window.location.href = "/perfilUsuario";
         }
       } else {
-        alert("Credenciales incorrectas");
+        // Mostrar mensaje de error del servlet
+        alert(data.message || "Credenciales incorrectas");
       }
     } catch (error) {
       console.error("Error al iniciar sesión:", error);
+      alert("Error al intentar iniciar sesión. Por favor, inténtalo de nuevo.");
     }
   };
 

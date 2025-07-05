@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './components/login';
 import PerfilAdmin from './components/perfilAdmin';
 import Home from './components/Home';
@@ -9,29 +9,25 @@ import NuevoUsuario from './components/nuevoUsuario';
 import ModificarUsuario from './components/modificarUsuario';
 import EmpleadoForm from './components/EmpleadoForm';
 import ActaForm from './components/ActaForm';
+import ComprasForm from './components/ComprasForm';
 
 function App() {
-  // Aquí obtén usuario y rol de donde tengas la info, por ejemplo del estado o contexto
-  const usuarioLogueado = localStorage.getItem("usuarioLogueado");
-  const rol = localStorage.getItem("rol");
 
-  // Si hay usuario logueado, muestra las rutas protegidas
   return (
     <Router>
       <Routes>
         {/* otras rutas */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        {rol === "admin" && <Route path='/perfilAdmin' element={<PerfilAdmin usuarioLogueado={usuarioLogueado} rol={rol} /> } />}
-        <Route path='/perfilAdmin' element={<Navigate to="/login"/>}/>
-        {rol === "usuario" && <Route path='/perfilUsuario' element={<PerfilUsuario usuarioLogueado={usuarioLogueado} rol={rol} /> } />}
-        <Route path='/perfilUsuario' element={<Navigate to="/login"/>}/>
+        <Route path="/perfilAdmin" element={<PerfilAdmin />} />
+        <Route path="/perfilUsuario" element={<PerfilUsuario />} />
         <Route path='/equipo' element={<Equipo />} />
         <Route path='/gestionUsuario' element={<GestionarUsuario />} />
         <Route path='/nuevoUsuario' element={<NuevoUsuario />} />
         <Route path='/modificarUsuario' element={<ModificarUsuario />} />
         <Route path='/EmpleadoForm' element={<EmpleadoForm />} />
         <Route path='/ActaForm' element={<ActaForm />} />
+        <Route path='/ComprasForm' element={<ComprasForm />} />
       </Routes>
     </Router>
   );
