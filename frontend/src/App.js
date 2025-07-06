@@ -10,6 +10,7 @@ import ModificarUsuario from './components/modificarUsuario';
 import EmpleadoForm from './components/EmpleadoForm';
 import ActaForm from './components/ActaForm';
 import ComprasForm from './components/ComprasForm';
+import InformeModulo from './components/InformeModulo';
 
 function App() {
 
@@ -28,6 +29,8 @@ function App() {
         <Route path='/EmpleadoForm' element={<EmpleadoForm />} />
         <Route path='/ActaForm' element={<ActaForm />} />
         <Route path='/ComprasForm' element={<ComprasForm />} />
+        <Route path='/InformeModulo' element={<InformeModulo />} />
+        {/* otras rutas */}
       </Routes>
     </Router>
   );

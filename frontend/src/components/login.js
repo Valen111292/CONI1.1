@@ -44,6 +44,8 @@ function Login() {
         // Guardar datos en localStorage para persistencia
         localStorage.setItem("usuarioLogueado", data.user.username);
         localStorage.setItem("rol", data.user.rolAutenticacion); // Usar rolAutenticacion del servlet
+        localStorage.setItem("idUsuario", data.user.id); // Guardar idUsuario si es necesario
+        localStorage.setItem("cargoEmpleado", data.user.cargoEmpleado); // Guardar cargoEmpleado si es necesario
 
         // Redirigir según el rol
         if (data.user.rolAutenticacion === "admin") {

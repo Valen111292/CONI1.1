@@ -20,12 +20,10 @@ const ComprasForm = () => {
     const [tipoPerifericoSeleccionado, setTipoPerifericoSeleccionado] = useState('');
     const [perifericoEspecificoSeleccionado, setPerifericoEspecificoSeleccionado] = useState('');
 
-
     // --- ESTADOS PARA EL LISTADO DE SOLICITUDES ---
     const [solicitudes, setSolicitudes] = useState([]);
     const [cargandoSolicitudes, setCargandoSolicitudes] = useState(true);
     const [errorListado, setErrorListado] = useState('');
-    // ELIMINAMOS 'recargarListado' y 'setRecargarListado' por completo.
 
     // --- ESTADOS PARA ORDENAMIENTO Y FILTRADO ---
     const [sortBy, setSortBy] = useState('fecha'); // Por defecto, ordenar por fecha
@@ -33,6 +31,25 @@ const ComprasForm = () => {
     const [filterPriority, setFilterPriority] = useState('all'); // Por defecto, no filtrar por prioridad
     const [searchKeyword, setSearchKeyword] = useState(''); // Estado para la palabra clave de búsqueda
 
+    // --- ESTADOS PARA INFORMACIÓN DEL USUARIO AUTENTICADO ---
+    // Inicializamos los estados directamente desde localStorage
+    const [currentUserId, setCurrentUserId] = useState(() => {
+        const id = localStorage.getItem("idUsuario");
+        return id ? parseInt(id, 10) : null; // Convertir a número
+    });
+    const [currentUserRol, setCurrentUserRol] = useState(localStorage.getItem("rol"));
+    const [currentUserCargo, setCurrentUserCargo] = useState(localStorage.getItem("cargoEmpleado"));
+
+    // --- ESTADOS PARA LA EDICIÓN DE SOLICITUDES ---
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [solicitudToEdit, setSolicitudToEdit] = useState(null);
+    const [editFormData, setEditFormData] = useState({
+        tipoSolicitud: '',
+        descripcion: '',
+        altaPrioridad: false,
+        estado: '' // Se añade el estado para que el rol "Otro" pueda editarlo
+    });
+    const [mensajeEdicion, setMensajeEdicion] = useState('');
 
     // --- DATOS DE OPCIONES PARA LOS SELECTS DINÁMICOS ---
     const opcionesAlmacenamiento = ["256GB SSD", "512GB SSD", "1TB SSD"];
@@ -43,12 +60,17 @@ const ComprasForm = () => {
     const opcionesPerifericosEntrada = ["Mouse", "Teclado", "Webcam", "Micrófono", "Cargador", "Cable Corriente Alterna"];
     const opcionesPerifericosAlmacenamiento = ["Disco Duro Portátil", "USB",]
 
-
     // --- FUNCIÓN MEMORIZADA PARA CARGAR EL LISTADO DE SOLICITUDES ---
-    // Esta función se re-creará solo cuando sus dependencias cambien.
     const fetchSolicitudes = useCallback(async () => {
         setCargandoSolicitudes(true);
         setErrorListado('');
+
+        // Solo intentar cargar solicitudes si tenemos un ID de usuario
+        if (!currentUserId) {
+            setErrorListado("No se pudo cargar el listado de solicitudes. Usuario no autenticado.");
+            setCargandoSolicitudes(false);
+            return;
+        }
 
         try {
             // Construir los parámetros de consulta
@@ -85,21 +107,24 @@ const ComprasForm = () => {
         } finally {
             setCargandoSolicitudes(false);
         }
-    }, [sortBy, sortOrder, filterPriority, searchKeyword, setCargandoSolicitudes, setErrorListado, setSolicitudes]); // Dependencias de useCallback
+    }, [sortBy, sortOrder, filterPriority, searchKeyword, currentUserId, setCargandoSolicitudes, setErrorListado, setSolicitudes]); // Dependencias de useCallback
 
     // --- EFECTO PARA CARGAR LAS SOLICITUDES ---
     // Se ejecutará cuando 'fetchSolicitudes' cambie (es decir, cuando cambien los parámetros de búsqueda/filtro)
     // o cuando el componente se monte por primera vez.
     useEffect(() => {
-        fetchSolicitudes();
-    }, [fetchSolicitudes]); // Dependencia: la función fetchSolicitudes (que cambia cuando sus propias dependencias cambian)
+        // Ejecutar fetchSolicitudes solo si el currentUserId ya está disponible
+        if (currentUserId !== null) {
+            fetchSolicitudes();
+        }
+    }, [fetchSolicitudes, currentUserId]); // Añadimos currentUserId como dependencia aquí
 
 
     // --- Manejador de cambio para la CLASE principal ---
     const handleClaseChange = (e) => {
         const selectedClase = e.target.value;
         setClaseSeleccionada(selectedClase);
-        // Resetear todos los estados de los sub-selects cuando cambia la clase principal
+
         setTipoEquipoSeleccionado('');
         setAlmacenamientoSeleccionado('');
         setRamSeleccionada('');
@@ -175,6 +200,98 @@ const ComprasForm = () => {
         }
     };
 
+    // --- FUNCIONES PARA EDITAR Y ELIMINAR SOLICITUDES ---
+
+    const handleEdit = (solicitud) => {
+        setSolicitudToEdit(solicitud);
+        setEditFormData({
+            tipoSolicitud: solicitud.tipoSolicitud,
+            descripcion: solicitud.descripcion,
+            altaPrioridad: solicitud.altaPrioridad,
+            estado: solicitud.estado
+        });
+        setIsEditModalOpen(true);
+        setMensajeEdicion('');
+    };
+
+    const handleEditFormChange = (e) => {
+        const { name, value, type, checked } = e.target;
+        setEditFormData(prev => ({
+            ...prev,
+            [name]: type === 'checkbox' ? checked : value
+        }));
+    };
+
+    const handleEditSubmit = async (event) => {
+        event.preventDefault();
+        setMensajeEdicion('');
+
+        if (!solicitudToEdit) return;
+
+        const url = `http://localhost:8080/CONI1.0/api/solicitudes-compra/${solicitudToEdit.id}`;
+
+        try {
+            const response = await fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(editFormData),
+                credentials: 'include'
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                alert(data.mensaje); // Usar alert temporalmente, considera un modal personalizado
+                fetchSolicitudes();
+                setIsEditModalOpen(false);
+            } else {
+                alert(`Error al actualizar: ${data.mensaje || 'Ocurrió un error desconocido.'}`);
+            }
+        } catch (error) {
+            console.error('Error al conectar con el backend (edición):', error);
+            alert('Error de conexión con el servidor al actualizar.');
+        }
+    };
+
+    const handleDelete = async (solicitudId) => {
+        setMensajeEdicion('');
+        if (window.confirm('¿Estás seguro de que quieres eliminar esta solicitud?')) {
+            const url = `http://localhost:8080/CONI1.0/api/solicitudes-compra/${solicitudId}`;
+            try {
+                const response = await fetch(url, {
+                    method: 'DELETE',
+                    credentials: 'include'
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert(data.mensaje);
+                    fetchSolicitudes();
+                } else {
+                    alert(`Error al eliminar: ${data.mensaje || 'Ocurrió un error desconocido.'}`);
+                }
+            } catch (error) {
+                console.error('Error al conectar con el backend (eliminación):', error);
+                alert('Error de conexión con el servidor al eliminar.');
+            }
+        }
+    };
+
+    const handleCloseEditModal = () => {
+        setIsEditModalOpen(false);
+        setSolicitudToEdit(null);
+        setEditFormData({
+            tipoSolicitud: '',
+            descripcion: '',
+            altaPrioridad: false,
+            estado: ''
+        });
+        setMensajeEdicion('');
+    };
+
     // --- FUNCIÓN PARA CERRAR SESIÓN ---
     const handleLogout = async () => {
         try {
@@ -186,6 +303,8 @@ const ComprasForm = () => {
             if (response.ok) {
                 localStorage.removeItem("usuarioLogueado");
                 localStorage.removeItem("rol");
+                localStorage.removeItem("idUsuario");
+                localStorage.removeItem("cargoEmpleado");
                 sessionStorage.clear();
                 localStorage.setItem("logoutMessage", "Sesión cerrada exitosamente");
                 navigate("/");
@@ -327,7 +446,6 @@ const ComprasForm = () => {
                                 {/* Periférico Específico (visible solo si hay tipo de periférico seleccionado) */}
                                 {tipoPerifericoSeleccionado && (
                                     <div className="seleccion" style={{ marginTop: '15px' }}>
-                                        <label htmlFor="perifericoEspecifico">Periférico Específico</label>
                                         <select
                                             name="perifericoEspecifico"
                                             id="perifericoEspecifico"
@@ -375,7 +493,7 @@ const ComprasForm = () => {
             </main>
 
             <section className="container listado-solicitudes">
-                <h2>Listado de Solicitudes Enviadas</h2>
+                <h2>Solicitudes Enviadas</h2>
                 {/* Controles de ordenamiento y filtrado */}
                 <div className="container filtros-ordenamiento">
                     <h3>Opciones de Visualización</h3>
@@ -434,7 +552,7 @@ const ComprasForm = () => {
                             value={searchKeyword}
                             onChange={(e) => setSearchKeyword(e.target.value)}
                         />
-                        {/* El botón de búsqueda ahora llama directamente a fetchSolicitudes,
+                        {/* El botón de búsqueda llama directamente a fetchSolicitudes,
                             lo cual es útil si quieres que la búsqueda se active solo con un click,
                             en lugar de cada vez que se teclea una letra.
                         */}
@@ -449,7 +567,11 @@ const ComprasForm = () => {
                 </div>
                 {/* Fin de Controles de ordenamiento y filtrado */}
 
-                {cargandoSolicitudes ? (
+                {/* Condición de carga y renderizado: Ahora solo muestra "Cargando" si no hay ID de usuario al inicio,
+                    o si fetchSolicitudes está en curso. */}
+                {currentUserId === null ? (
+                    <p>Por favor, inicie sesión para ver las solicitudes.</p>
+                ) : cargandoSolicitudes ? (
                     <p>Cargando solicitudes...</p>
                 ) : errorListado ? (
                     <p className="error-mensaje">{errorListado}</p>
@@ -465,6 +587,7 @@ const ComprasForm = () => {
                                 <th>Prioridad</th>
                                 <th>Fecha</th>
                                 <th>Estado</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -476,12 +599,109 @@ const ComprasForm = () => {
                                     <td>{solicitud.altaPrioridad ? 'Sí' : 'No'}</td>
                                     <td>{new Date(solicitud.fechaSolicitud).toLocaleString()}</td>
                                     <td>{solicitud.estado}</td>
+                                    <td>
+                                        {/* Botón Editar */}
+                                        {(solicitud.estado === 'Pendiente' && solicitud.idUsuario === currentUserId) && (
+                                            <button
+                                                className="btn-accion btn-editar"
+                                                onClick={() => handleEdit(solicitud)}
+                                            >
+                                                Editar
+                                            </button>
+                                        )}
+                                        {/* Botón Eliminar */}
+                                        {(solicitud.estado === 'Pendiente' && solicitud.idUsuario === currentUserId) && (
+                                            <button
+                                                className="btn-accion btn-eliminar"
+                                                onClick={() => handleDelete(solicitud.id)}
+                                            >
+                                                Eliminar
+                                            </button>
+                                        )}
+                                        {/* Botón para cambiar estado (solo para rol "Usuario" y cargo "Otro") */}
+                                        {currentUserRol === "usuario" && currentUserCargo === "Otro" && (
+                                            <button
+                                                className="btn-accion btn-cambiar-estado"
+                                                onClick={() => handleEdit(solicitud)}
+                                            >
+                                                Cambiar Estado
+                                            </button>
+                                        )}
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                 )}
             </section>
+
+            {/* Modal de Edición */}
+            {isEditModalOpen && solicitudToEdit && (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <h3>Editar Solicitud #{solicitudToEdit.id}</h3>
+                        <form onSubmit={handleEditSubmit}>
+                            {/* Campos editables para el propietario */}
+                            {solicitudToEdit.idUsuario === currentUserId && (
+                                <>
+                                    <label>Clase de Solicitud:</label>
+                                    <select
+                                        name="tipoSolicitud"
+                                        value={editFormData.tipoSolicitud}
+                                        onChange={handleEditFormChange}
+                                        disabled={solicitudToEdit.estado !== 'Pendiente'}
+                                    >
+                                        <option value="Equipo">Equipo</option>
+                                        <option value="Periferico">Periférico</option>
+                                        <option value="Equipo/Periferico">Equipo/Periferico</option>
+                                    </select>
+
+                                    <label>Descripción:</label>
+                                    <textarea
+                                        name="descripcion"
+                                        value={editFormData.descripcion}
+                                        onChange={handleEditFormChange}
+                                        disabled={solicitudToEdit.estado !== 'Pendiente'}
+                                    ></textarea>
+
+                                    <label>
+                                        <input
+                                            type="checkbox"
+                                            name="altaPrioridad"
+                                            checked={editFormData.altaPrioridad}
+                                            onChange={handleEditFormChange}
+                                            disabled={solicitudToEdit.estado !== 'Pendiente'}
+                                        /> Alta Prioridad
+                                    </label>
+                                </>
+                            )}
+
+                            {/* Campo de Estado (solo para rol "Usuario" y cargo "Otro") */}
+                            {currentUserRol === "usuario" && currentUserCargo === "Otro" && (
+                                <>
+                                    <label>Estado:</label>
+                                    <select
+                                        name="estado"
+                                        value={editFormData.estado}
+                                        onChange={handleEditFormChange}
+                                    >
+                                        <option value="Pendiente">Pendiente</option>
+                                        <option value="Aprobada">Aprobada</option>
+                                        <option value="Rechazada">Rechazada</option>
+                                        <option value="Completada">Completada</option>
+                                    </select>
+                                </>
+                            )}
+
+                            {mensajeEdicion && <p className="mensaje-edicion">{mensajeEdicion}</p>}
+                            <div className="modal-actions">
+                                <button type="submit" className="btn-guardar">Guardar Cambios</button>
+                                <button type="button" className="btn-cancelar" onClick={handleCloseEditModal}>Cancelar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

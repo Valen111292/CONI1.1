@@ -78,11 +78,11 @@ const PerfilAdmin = () => {
           </div>
 
           <div className="informe">
-            <a href="/generar-informe">
+            <a href="/InformeModulo">
               <img src={generarInformeGif} alt="Generar Informe" />
             </a>
             <div className="container text-informe">
-              <button><a href="/generar-informe">Generar informe</a></button>
+              <button><a href="/InformeModulo">Generar informe</a></button>
               <p>Obtener informes detallados sobre el estado del inventario</p>
             </div>
           </div>

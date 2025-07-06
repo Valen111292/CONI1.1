@@ -236,7 +236,7 @@ function Equipo() {
           value={editando ? equipoEditando.n_serie : n_serie} onChange={(e) => editando ? setEquipoEditando({ ...equipoEditando, n_serie: e.target.value }) : setN_Serie(e.target.value)}
           required />
           
-          <select
+          <select className='clase'
             value={editando ? equipoEditando.clase : clase}
             onChange={(e) => {
               if (editando) {
@@ -251,7 +251,7 @@ function Equipo() {
             <option value="equipo">EQUIPO</option>
           </select>
 
-          <select
+          <select className='tipo'
             value={editando ? equipoEditando.tipo : tipo}
             onChange={(e) => {
               if (editando) {
@@ -275,14 +275,14 @@ function Equipo() {
 
           <input name="procesador" placeholder="Procesador" value={editando ? equipoEditando.procesador : procesador} onChange={(e) => editando ? setEquipoEditando({ ...equipoEditando, procesador: e.target.value }) : setProcesador(e.target.value)} />
 
-          <select name="estado" value={editando ? equipoEditando.estado : estado} onChange={(e) => editando ? setEquipoEditando({ ...equipoEditando, estado: e.target.value }) : setEstado(e.target.value)} required>
+          <select className='estado' name="estado" value={editando ? equipoEditando.estado : estado} onChange={(e) => editando ? setEquipoEditando({ ...equipoEditando, estado: e.target.value }) : setEstado(e.target.value)} required>
             <option value="">-- Selecciona un estado --</option>
             <option value="DISPONIBLE">DISPONIBLE</option>
             <option value="ASIGNADO">ASIGNADO</option>
             <option value="PENDIENTE">PENDIENTE</option>
           </select>
 
-          <button type="submit">{editando ? 'Actualizar' : 'Agregar'}</button>
+          <button className='botonEquipo' type="submit">{editando ? 'Actualizar' : 'Agregar'}</button>
           {editando && <button type="button" onClick={cancelarEdicion}>Cancelar</button>}
         </form>
 

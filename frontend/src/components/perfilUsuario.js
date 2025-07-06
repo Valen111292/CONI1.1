@@ -69,9 +69,9 @@ const PerfilUsuario = () => {
                 </div>
             </div>
             <div className="gestion-compras">
-                <a href="ComprasForm"><img src={comprasGif} alt="compras"/></a>
+                <a href="/ComprasForm"><img src={comprasGif} alt="compras"/></a>
                 <div className="container text-compras">
-                    <button><a href="ComprasForm">Compras</a></button>
+                    <button><a href="/ComprasForm">Compras</a></button>
                 </div>
             </div>
             <div className="gestion-actas">
@@ -87,9 +87,9 @@ const PerfilUsuario = () => {
                 </div>
             </div>
             <div className="informe">
-                <a href="generar-informe.html"><img src={genearInformeGif} alt="generar_informe"/></a>
+                <a href="/InformeModulo"><img src={genearInformeGif} alt="generar_informe"/></a>
                 <div className="container text-informe">
-                    <button><a href="generar-informe.html">Generar informe</a></button>
+                    <button><a href="/InformeModulo">Generar informe</a></button>
                 </div>
             </div>
         </div>

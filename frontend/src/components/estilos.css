@@ -219,6 +219,26 @@ h2 {
     font-size: 25px;
 }
 
+.estado,
+.tipo,
+.clase {
+    text-align: center;
+    font-size: 14px;
+    width: 255px;
+    height: 35px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px 0 black;
+    margin: 5px;
+}
+
+.estado,
+.clase,
+.tipo:focus {
+    outline: none;
+    border-color: #4a90e2;
+    background-color: #fff;
+}
+
 .agregarEquipo {
     width: 90%;
     margin: auto;
@@ -280,14 +300,595 @@ table thead {
     font-weight: bold;
 }
 
+/*estilos para el modulo de compras*/
 
-@media screen and (max-width:500px) {
-    body {
-        display: flex;
-        background-size: auto;
-        justify-content: center;
-        flex-direction: column;
+.compras-modulo .container-textos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 3px;
+    background-color: rgba(255, 255, 255, 0.388);
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    width: 70%;
+    margin: auto;
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-style: italic;
+    color: rgb(7, 7, 60);
+}
+
+.desplegable-compras {
+    width: 70%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: rgb(7, 7, 60);
+    background-color: rgba(255, 255, 255, 0.388);
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    overflow: hidden;
+    margin: auto;
+}
+
+.desplegable-compras select {
+    margin: 05px;
+}
+
+.desplegable-compras textarea {
+    width: 100%;
+    height: 75px;
+    padding: 5px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px 0 black;
+    resize: none;
+    margin: auto;
+}
+
+.checkbox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-style: italic;
+    font-weight: bold;
+    color: rgb(7, 7, 60);
+    justify-items: center;
+}
+
+.checkbox input {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+}
+
+/* Modulo de compras (solicitudes enviadas) */
+
+.listado-solicitudes {
+    width: 95%;
+    margin: 10px auto;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.388);
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+}
+
+.control-group {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.control-group label {
+    margin-left: 15px;
+    margin-right: 20px;
+}
+
+table {
+    width: 95%;
+    /* Asegura que la tabla ocupe todo el ancho disponible de su contenedor */
+    border-collapse: collapse;
+    /* Elimina el espacio entre las celdas */
+    margin-top: 20px;
+    /* Espacio superior para separar de otros elementos */
+    margin-bottom: 20px;
+    /* Espacio inferior */
+    background-color: rgba(255, 255, 255, 0.388);
+    /* Fondo blanco con transparencia, consistente con tus otros contenedores */
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+    /* Sombra consistente con tus otros elementos */
+    border-radius: 12px;
+    /* Bordes redondeados para la tabla completa */
+    overflow: hidden;
+    /* Asegura que los bordes redondeados se apliquen a todo el contenido de la tabla */
+}
+
+/* Estilos para el encabezado de la tabla */
+table thead {
+    background-color: rgb(230, 45, 45);
+    /* Rojo fuerte, tomado de tu .barra-superior */
+    color: aliceblue;
+    /* Texto blanco azulado, tomado de tus botones/encabezado */
+    font-weight: bold;
+}
+
+/* Estilos para las celdas del encabezado (<th>) y del cuerpo (<td>) */
+table th,
+table td,
+.description-column {
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    /* Borde más suave, semitransparente para que se fusione con el fondo */
+    padding: 12px 15px;
+    /* Relleno para hacer las celdas más espaciosas */
+    text-align: center;
+    /* Centra el texto en todas las celdas */
+    /* Estas propiedades son importantes para manejar contenido largo en celdas y evitar desbordamientos */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+}
+
+/* Estilo para filas impares (fondo alternado para mejor legibilidad) */
+table tbody tr:nth-child(odd) {
+    background-color: rgba(255, 255, 255, 0.2);
+    /* Un poco más transparente que el fondo de la tabla */
+}
+
+/* Estilo para filas pares (fondo alternado) */
+table tbody tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.1);
+    /* Aún más transparente */
+}
+
+/* Efecto hover para las filas del cuerpo de la tabla */
+table tbody tr:hover {
+    background-color: rgba(230, 45, 45, 0.2);
+    /* Un toque de tu color principal al pasar el ratón */
+    cursor: default;
+    /* Mantiene el cursor por defecto */
+}
+
+/* Estilos para los botones de acción dentro de las tablas (si ya los tienes, esto los ajusta) */
+.btn-accion {
+    padding: 6px 12px;
+    margin: 2px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85em;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    /* Pequeña sombra para los botones */
+    color: white;
+    /* Color de texto para los botones de acción */
+}
+
+.btn-accion:hover {
+    transform: translateY(-1px);
+    /* Efecto ligero al pasar el ratón */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Colores específicos para los botones de acción */
+.btn-editar {
+    background-color: #007bff;
+    /* Azul estándar para editar */
+}
+
+.btn-editar:hover {
+    background-color: #0056b3;
+}
+
+.btn-eliminar {
+    background-color: #dc3545;
+    /* Rojo estándar para eliminar */
+}
+
+.btn-eliminar:hover {
+    background-color: #c82333;
+}
+
+.btn-cambiar-estado {
+    background-color: #28a745;
+    /* Verde estándar para cambiar estado */
+}
+
+.btn-cambiar-estado:hover {
+    background-color: #218838;
+}
+
+.btn-ver {
+    background-color: #17a2b8;
+    /* Azul cian para ver */
+}
+
+.btn-ver:hover {
+    background-color: #138496;
+}
+
+.btn-descargar {
+    background-color: #218838;
+    color: #333;
+    /* Texto oscuro para contraste en amarillo */
+}
+
+.btn-descargar:hover {
+    background-color: #218838;
+}
+
+/* Estilos para el botón principal de "Generar y Descargar Informe" */
+.btn-generar-excel {
+    display: block;
+    /* Ocupa su propia línea */
+    width: fit-content;
+    /* Se ajusta al contenido */
+    margin: 25px auto;
+    /* Centra el botón horizontalmente y añade espacio */
+    padding: 15px 30px;
+    background-color: rgb(230, 45, 45);
+    /* Tu color principal rojo */
+    color: aliceblue;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.2em;
+    /* Fuente un poco más grande */
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.btn-generar-excel:hover {
+    background-color: #c82333;
+    /* Rojo más oscuro al pasar el ratón */
+    transform: translateY(-2px);
+    /* Pequeño efecto de elevación */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Contenedor para el modal de informe histórico, si es necesario */
+.report-detail-table-container {
+    max-height: 60vh;
+    /* Altura máxima para la tabla dentro del modal */
+    overflow-y: auto;
+    /* Scroll para la tabla si es muy larga */
+    margin-bottom: 20px;
+}
+
+/* --- Estilos para ActaForm.js --- */
+
+.acta-form-modulo {
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.acta-main {
+    background-color: rgba(255, 255, 255, 0.388); /* Fondo blanco con transparencia */
+    padding: 30px;
+    border-radius: 12px; /* Bordes redondeados */
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.3); /* Sombra consistente */
+    margin: 20px auto; /* Centrar y dar espacio */
+    max-width: 900px; /* Limitar el ancho para mejor lectura */
+    text-align: center; /* Centrar el contenido general */
+    color: rgb(7, 7, 60); /* Color de texto principal */
+}
+
+.acta-main h2 {
+    margin-bottom: 25px;
+    color: rgb(7, 7, 60); /* Color de título principal */
+}
+
+.form-registro-acta input[type="text"] {
+    width: calc(100% - 20px); /* Ajusta el ancho para el padding */
+    max-width: 300px; /* Limita el ancho de los inputs de texto */
+    margin-bottom: 15px;
+}
+
+.form-registro-acta button[type="submit"] {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1.1em;
+    width: auto; /* Permitir que el botón se ajuste a su contenido */
+    min-width: 200px;
+}
+
+.section-title {
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-size: 25px;
+    color: rgb(7, 7, 60);
+    text-align: center;
+    font-style: italic;
+    font-weight: bold;
+}
+
+.search-input {
+    width: calc(100% - 20px); /* Ajusta el ancho para el padding */
+    max-width: 400px; /* Un poco más ancho para la búsqueda */
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); /* Sombra interior suave */
+}
+
+.equipos-selection-container {
+    border: 1px solid rgba(230, 45, 45, 0.5); /* Borde con color principal */
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 20px;
+    background-color: rgba(255, 255, 255, 0.2); /* Fondo ligeramente transparente */
+    max-height: 400px; /* Altura máxima para el contenedor de selección */
+    overflow-y: auto; /* Permite desplazamiento vertical si hay muchos equipos */
+}
+
+.equipment-category {
+    margin-bottom: 20px;
+    border-bottom: 1px dashed rgba(7, 7, 60, 0.3); /* Separador sutil entre categorías */
+    padding-bottom: 15px;
+}
+
+.equipment-category:last-child {
+    border-bottom: none; /* No hay borde en la última categoría */
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.equipment-category h3 {
+    color: rgb(230, 45, 45); /* Color de título de categoría */
+    font-size: 22px;
+    margin-top: 0;
+    margin-bottom: 15px;
+    text-align: left; /* Alinea el título de categoría a la izquierda */
+    padding-left: 10px;
+}
+
+.equipment-list {
+    display: flex;
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan */
+    gap: 10px; /* Espacio entre los elementos */
+    justify-content: center; /* Centra los elementos */
+}
+
+.equipment-item {
+    background-color: rgba(255, 255, 255, 0.5); /* Fondo más visible para cada elemento */
+    border: 1px solid rgba(7, 7, 60, 0.2); /* Borde sutil */
+    border-radius: 8px;
+    padding: 10px 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    flex: 1 1 calc(50% - 20px); /* Dos columnas en pantallas más grandes, ajusta el 50% y el gap */
+    max-width: calc(50% - 20px); /* Para asegurar dos columnas */
+    min-width: 280px; /* Ancho mínimo para evitar que se pongan demasiado pequeños */
+    text-align: left; /* Alinea el texto dentro del item */
+    transition: background-color 0.3s ease;
+}
+
+.equipment-item:hover {
+    background-color: rgba(230, 45, 45, 0.1); /* Ligero hover con color principal */
+}
+
+.equipment-item label {
+    display: flex; /* Permite alinear el checkbox y el texto */
+    align-items: center;
+    cursor: pointer;
+    font-size: 1em;
+    color: rgb(7, 7, 60);
+}
+
+.equipment-item input[type="checkbox"] {
+    width: 20px; /* Tamaño del checkbox */
+    height: 20px;
+    margin-right: 10px;
+    flex-shrink: 0; /* Evita que el checkbox se encoja */
+    box-shadow: none; /* Elimina la sombra por defecto de tu input general */
+}
+
+.equipment-details {
+    flex-grow: 1; /* Permite que los detalles ocupen el espacio restante */
+    white-space: normal; /* Asegura que el texto se envuelva */
+    word-wrap: break-word; /* Rompe palabras largas si es necesario */
+}
+
+.detail-label {
+    font-weight: bold;
+    color: rgb(230, 45, 45); /* Color para las etiquetas de detalle */
+    margin-right: 5px;
+}
+
+.no-results-message {
+    color: rgb(230, 45, 45);
+    font-style: italic;
+    margin-top: 20px;
+    font-size: 1.1em;
+}
+
+.divider {
+    border: none;
+    border-top: 2px solid rgb(230, 45, 45); /* Línea divisoria con tu color principal */
+    margin: 40px 0;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.consultar-actas-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-wrap: wrap; /* Para responsividad */
+}
+
+.consultar-actas-section input {
+    width: calc(100% - 20px);
+    max-width: 250px;
+}
+
+.consultar-actas-section button {
+    width: auto;
+    min-width: 120px;
+}
+
+.actas-consultadas-table-container {
+    margin-top: 20px;
+    /* Reutiliza los estilos de tabla globales definidos en App.css */
+}
+
+/* Media Queries para responsividad */
+@media (max-width: 768px) {
+    .acta-main {
+        padding: 20px;
+        width: 95%;
     }
 
+    .form-registro-acta input[type="text"],
+    .search-input {
+        width: 100%;
+        max-width: none;
+    }
 
+    .equipment-item {
+        flex: 1 1 100%; /* Una columna en pantallas pequeñas */
+        max-width: 100%;
+    }
+
+    .consultar-actas-section {
+        flex-direction: column;
+    }
+    .consultar-actas-section input,
+    .consultar-actas-section button {
+        width: 100%;
+        max-width: none;
+    }
+}
+
+/* Media Queries para Responsividad (adaptadas de tus estilos) */
+@media (max-width: 768px) {
+
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+        display: block;
+    }
+
+    thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    tr {
+        border: 1px solid #ccc;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        /* Bordes redondeados para cada fila en móvil */
+        overflow: hidden;
+    }
+
+    td {
+        border: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        /* Borde más sutil en móvil */
+        position: relative;
+        padding-left: 50%;
+        text-align: right;
+        font-size: 0.9em;
+        /* Fuente ligeramente más pequeña */
+    }
+
+    td:before {
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align: left;
+        font-weight: bold;
+        color: rgb(7, 7, 60);
+        /* Color de texto oscuro para las etiquetas */
+    }
+
+    /* Data labels for responsive table (asegúrate de que correspondan a tus columnas) */
+    /* Ejemplo para InformeModulo.js */
+    td:nth-of-type(1):before {
+        content: "ID Inventario:";
+    }
+
+    td:nth-of-type(2):before {
+        content: "Categoría:";
+    }
+
+    td:nth-of-type(3):before {
+        content: "Tipo:";
+    }
+
+    td:nth-of-type(4):before {
+        content: "Marca:";
+    }
+
+    td:nth-of-type(5):before {
+        content: "Serial:";
+    }
+
+    td:nth-of-type(6):before {
+        content: "RAM:";
+    }
+
+    td:nth-of-type(7):before {
+        content: "Disco:";
+    }
+
+    td:nth-of-type(8):before {
+        content: "Procesador:";
+    }
+
+    td:nth-of-type(9):before {
+        content: "Estado Asignación:";
+    }
+
+    td:nth-of-type(10):before {
+        content: "Asignado A:";
+    }
+
+    td:nth-of-type(11):before {
+        content: "Fecha Asignación:";
+    }
+
+    td:nth-of-type(12):before {
+        content: "Acciones:";
+    }
+
+    /* Si la tabla tiene columna de acciones */
+
+    /* Para las tablas de Informes Históricos */
+    .informes-historicos table td:nth-of-type(1):before {
+        content: "ID Informe:";
+    }
+
+    .informes-historicos table td:nth-of-type(2):before {
+        content: "Fecha Generación:";
+    }
+
+    .informes-historicos table td:nth-of-type(3):before {
+        content: "Generado Por:";
+    }
+
+    .informes-historicos table td:nth-of-type(4):before {
+        content: "Filtro Aplicado:";
+    }
+
+    .informes-historicos table td:nth-of-type(5):before {
+        content: "Acciones:";
+    }
 }
