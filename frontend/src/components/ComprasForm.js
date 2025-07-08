@@ -578,12 +578,12 @@ const ComprasForm = () => {
                 ) : solicitudes.length === 0 ? (
                     <p>No hay solicitudes enviadas aún.</p>
                 ) : (
-                    <table>
+                    <table className="tabla-solicitudes">
                         <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>Clase</th>
-                                <th>Descripción</th>
+                                <th className="descripcion-column">Descripción</th>
                                 <th>Prioridad</th>
                                 <th>Fecha</th>
                                 <th>Estado</th>

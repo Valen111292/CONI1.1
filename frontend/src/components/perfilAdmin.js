@@ -64,7 +64,7 @@ const PerfilAdmin = () => {
 
       <h2 className="titulo perfil-administrador">¿Qué deseas gestionar hoy?</h2>
 
-      <main className="contenido">
+      <div className="contenidoPerfilAdmin">
         <div className="container gestion-administrador">
 
           <div className="gestion-usuario">
@@ -74,6 +74,14 @@ const PerfilAdmin = () => {
             <div className="container text-usuarios">
               <button><a href="/gestionUsuario">Usuarios</a></button>
               <p>Administra y controla los perfiles de acceso al sistema</p>
+            </div>
+          </div>
+
+          <div className="gestion-empleados">
+            <a href="/EmpleadoForm"><img src={empleadosGif} alt="gestion_empleados" /></a>
+            <div className="container text-empleados">
+              <button><a href="/EmpleadoForm">Empleados</a></button>
+              <p>Acceso a la gestión de información sobre los empleados</p>
             </div>
           </div>
 
@@ -87,15 +95,8 @@ const PerfilAdmin = () => {
             </div>
           </div>
 
-          <div className="gestion-empleados">
-            <a href="/EmpleadoForm"><img src={empleadosGif} alt="gestion_empleados" /></a>
-            <div className="container text-empleados">
-              <button><a href="/EmpleadoForm">Empleados</a></button>
-            </div>
-          </div>
-
         </div>
-      </main>
+      </div>
     </div>
   );
 };

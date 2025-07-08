@@ -30,7 +30,7 @@ public class ActasServlet extends HttpServlet {
         response.setHeader("Access-Control-Allow-Headers", "Content-Type");
         response.setHeader("Access-Control-Allow-Credentials", "true");
 
-        try { // <--- INICIO DEL BLOQUE TRY
+        try {
         BufferedReader reader = req.getReader();
         Gson gson = new Gson();
         ActaVO acta = gson.fromJson(reader, ActaVO.class);

@@ -61,13 +61,13 @@ const GestionarUsuario = () => {
                 </div>
             </section>
 
-            <header>
+            <header className='gestionar-usuario'>
                 <div className="container botones-principales">
                     <button className="nuevo-usuario" type="button" onClick={handleNuevoUsuario}>
-                        Nuevo empleado
+                        Nuevo Usuario
                     </button>
                     <button className="actualizar-usuario" type="button" onClick={handleActualizarUsuario}>
-                        Modificar empleado
+                        Modificar Usuario
                     </button>
                 </div>
             </header>

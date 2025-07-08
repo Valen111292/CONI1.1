@@ -113,99 +113,100 @@ function ModificarUsuario() {
         </div>
       </section>
 
-      <label>Buscar por cédula:</label>
-      <input
-        type="text"
-        placeholder="Ingrese N° cédula"
-        value={cedula}
-        onChange={(e) => setCedula(e.target.value)}
-        required
-      />
-      <button onClick={handleBuscar} >Buscar</button>
+<main className="gestion-usuario-modificar-main">
 
-      {mensaje && <p style={{ color: 'red' }}>{mensaje}</p>}
+                <h2 className="titulo modificar-usuario">Modificar Usuario</h2>
 
-      {usuario && (
-        <main>
-          <div>
-            <h3>Modificar empleado</h3>
+                <div className="search-and-modify-card"> {/* Tarjeta principal */}
 
-            <label htmlFor="nombre">Nombre y apellidos:</label>
-            <input
-              type="text"
-              id="nombre"
-              name="nombre"
-              placeholder="ingrese el nombre y apellidos"
-              value={usuario.nombre}
-              onChange={handleChange}
-              required
-            />
-            <br />
+                    <div className="search-section"> {/* Sección de búsqueda */}
+                        <label className="instrucciones">Ingrese la cédula del usuario que desea modificar o eliminar:</label>
+                        <input
+                            className="input-cedula"
+                            type="text"
+                            placeholder="Ingrese N° cédula"
+                            value={cedula}
+                            onChange={(e) => setCedula(e.target.value)}
+                            required
+                        />
+                        <button onClick={handleBuscar}>Buscar</button>
+                    </div>
 
-            <label htmlFor="cedula">Cédula:</label>
-            <input
-              type="text"
-              id="cedula"
-              name="cedula"
-              placeholder="ingrese la cédula"
-              value={usuario.cedula}
-              onChange={handleChange}
-              required
-            />
-            <br />
+                    {mensaje && <p className="message-display">{mensaje}</p>} {/* Mensaje */}
 
-            <label htmlFor="rol">Rol a desempeñar:</label>
-            <select
-              name="rol"
-              id="rol"
-              placeholder="Seleccione un rol"
-              onChange={handleChange}
-              value={usuario.rol}
-              required
-            >
-              <option value="admin">Administrador</option>
-              <option value="usuario">Usuario</option>
-            </select>
-            <br />
+                    {usuario && (
+                        <div className="modify-user-form-container"> {/* Contenedor del formulario de modificación */}
+                            <label htmlFor="nombre">Nombre y apellidos:</label>
+                            <input
+                                type="text"
+                                id="nombre"
+                                name="nombre"
+                                placeholder="ingrese el nombre y apellidos"
+                                value={usuario.nombre}
+                                onChange={handleChange}
+                                required
+                            />
 
-            <input type="hidden" name="username" value={usuario.username} />
+                            <label htmlFor="cedula">Cédula:</label>
+                            <input
+                                type="text"
+                                id="cedula"
+                                name="cedula"
+                                placeholder="ingrese la cédula"
+                                value={usuario.cedula}
+                                onChange={handleChange}
+                                required
+                            />
 
-            <label htmlFor="email">Correo electrónico:</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={usuario.email}
-              placeholder="ingrese el e-mail"
-              onChange={handleChange}
-              required
-            />
-            <br />
-            
-            <label htmlFor="password">Contraseña:</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={usuario.password}
-              placeholder="ingrese una contraseña"
-              onChange={handleChange}
-              required
-            />
-            <br />
+                            <label htmlFor="rol">Rol a desempeñar:</label>
+                            <select
+                                name="rol"
+                                id="rol"
+                                placeholder="Seleccione un rol"
+                                onChange={handleChange}
+                                value={usuario.rol}
+                                required
+                            >
+                                <option value="admin">Administrador</option>
+                                <option value="usuario">Usuario</option>
+                            </select>
 
-            <button onClick={handleModificar} >
-              Modificar usuario
-            </button>
-            <button onClick={handleEliminar}>
-              Eliminar
-            </button>
+                            <input type="hidden" name="username" value={usuario.username} />
+
+                            <label htmlFor="email">Correo electrónico:</label>
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                value={usuario.email}
+                                placeholder="ingrese el e-mail"
+                                onChange={handleChange}
+                                required
+                            />
+
+                            <label htmlFor="password">Contraseña:</label>
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                value={usuario.password}
+                                placeholder="ingrese una contraseña"
+                                onChange={handleChange}
+                                required
+                            />
+
+                            <button onClick={handleModificar}>
+                                Modificar usuario
+                            </button>
+                            <button onClick={handleEliminar}>
+                                Eliminar
+                            </button>
+                        </div>
+                    )}
+                </div> {/* Cierre de search-and-modify-card */}
+            </main>
         </div>
-        </main>
-  )
-}
-    </div >
-  );
+    );
 }
 
 export default ModificarUsuario;
