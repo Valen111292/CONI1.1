@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useMemo, useCallback } from 'react'; // Agregamos useCallback
+import React, { useEffect, useState, useMemo, useCallback } from 'react'; 
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { useLocation, useNavigate } from 'react-router-dom';
 import logo from '../img/ESLOGAN CONI.png';
 import logoAldir from '../img/logo aldir.png';
-import '../App.css'; // Asegúrate de importar tu archivo CSS global para los estilos de tablas y botones
+import '../App.css'; 
 
 function ActaForm() {
     const location = useLocation();
@@ -35,7 +35,7 @@ function ActaForm() {
             console.error("Error al cargar equipos disponibles:", err);
             // Considera mostrar un mensaje al usuario si la carga inicial falla
         }
-    }, []); // No tiene dependencias externas, solo se crea una vez
+    }, []); 
 
     useEffect(() => {
         setActaDAta(prev => ({

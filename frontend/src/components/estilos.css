@@ -297,7 +297,7 @@ h2 {
 }
 
 .gestionar-usuario .botones-principales button:hover {
-    background-color: rgb(230, 45, 45);
+    background-color: #e62d2d;
     color: aliceblue;
     cursor: pointer;
     text-decoration: underline;
