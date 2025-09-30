@@ -1,28 +1,20 @@
-# ----------------------------------------------------
-# STAGE 1: COMPILACIÓN (BUILDER)
-# ----------------------------------------------------
-FROM maven:3.8.6-openjdk-17 AS builder
-
-# Directorio donde se compilará
-WORKDIR /app
-
-# Copia el código Java y el pom.xml
-COPY . /app
-
-# Compila el proyecto, generando el archivo .war en /app/target/
-RUN mvn clean package -DskipTests
-
-# ----------------------------------------------------
-# STAGE 2: EJECUCIÓN (FINAL - TOMCAT)
-# ----------------------------------------------------
+# Usa la imagen base de Tomcat
 FROM tomcat:9.0-jre17-temurin
 
-# Elimina la app de inicio por defecto
+# ----------------------------------------------------
+# CONFIGURACIÓN DE DESPLIEGUE
+# ----------------------------------------------------
+
+# Elimina la aplicación ROOT por defecto de Tomcat
 RUN rm -rf /usr/local/tomcat/webapps/ROOT
 
-# Copia el archivo WAR compilado desde el stage 'builder'
-# Lo renombramos a ROOT.war para que tu API esté en la URL base (sin /CONI1.0)
-COPY --from=builder /app/target/CONI1.0.war /usr/local/tomcat/webapps/ROOT.war
+# Copia el archivo .war *desde* la carpeta 'dist'
+# y lo nombra ROOT.war para que se sirva en la URL base (sin /CONI1.0)
+# ¡CRUCIAL!: Tu archivo .war DEBE estar en la carpeta 'backend/dist' en GitHub.
+COPY dist/CONI1.0.war /usr/local/tomcat/webapps/ROOT.war
 
+# El puerto por defecto es 8080
 EXPOSE 8080
+
+# Comando para iniciar Tomcat
 CMD ["catalina.sh", "run"]
