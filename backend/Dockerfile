@@ -1,9 +1,28 @@
-# Usamos una imagen oficial de Tomcat que ya incluye un servidor web
+# ----------------------------------------------------
+# STAGE 1: COMPILACIÓN (BUILDER)
+# ----------------------------------------------------
+FROM maven:3.8.6-openjdk-17 AS builder
+
+# Directorio donde se compilará
+WORKDIR /app
+
+# Copia el código Java y el pom.xml
+COPY . /app
+
+# Compila el proyecto, generando el archivo .war en /app/target/
+RUN mvn clean package -DskipTests
+
+# ----------------------------------------------------
+# STAGE 2: EJECUCIÓN (FINAL - TOMCAT)
+# ----------------------------------------------------
 FROM tomcat:9.0-jre17-temurin
 
-# Copiamos el archivo .war a la carpeta de despliegue de Tomcat
-COPY dist/CONI1.0.war /usr/local/tomcat/webapps/coni.war
+# Elimina la app de inicio por defecto
+RUN rm -rf /usr/local/tomcat/webapps/ROOT
 
-# El puerto por defecto de Tomcat es el 8080
+# Copia el archivo WAR compilado desde el stage 'builder'
+# Lo renombramos a ROOT.war para que tu API esté en la URL base (sin /CONI1.0)
+COPY --from=builder /app/target/CONI1.0.war /usr/local/tomcat/webapps/ROOT.war
+
 EXPOSE 8080
-
+CMD ["catalina.sh", "run"]
