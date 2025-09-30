@@ -1,12 +1,20 @@
-package filtro;
+package filtro; // Verifica que este sea tu paquete correcto
 
-import jakarta.servlet.*;
-import jakarta.servlet.annotation.WebFilter;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-@WebFilter("/*")  // Intercepta todas las URLs
+// *****************************************************************
+// IMPORTANTE: Hemos eliminado la anotación @WebFilter para forzar 
+// el mapeo en web.xml y evitar conflictos de versión con Tomcat 9.
+// *****************************************************************
+
 public class CORSFilter implements Filter {
 
     @Override
@@ -16,25 +24,27 @@ public class CORSFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
 
-        // Origen permitido, cámbialo si tienes otro frontend
-        String allowedOrigin = "https://coni1-0frontend.onrender.com"; // ¡Usar HTTPS y la URL desplegada!
+        // *************** ORIGEN CORREGIDO ***************
+        // Permite el acceso SÓLO desde tu Frontend de Render
+        String allowedOrigin = "https://coni1-0frontend.onrender.com";
+        // **************************************************
 
         // Añadir headers CORS comunes a TODAS las respuestas
         response.setHeader("Access-Control-Allow-Origin", allowedOrigin);
         response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setHeader("Access-Control-Allow-Headers", "Origin, Content-Type, Accept, Authorization");
         response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
-        response.setHeader("Vary", "Origin"); // Para que los proxies no cacheen mal
-        response.setHeader("Access-Control-Max-Age", "3600"); 
+        response.setHeader("Vary", "Origin"); 
+        response.setHeader("Access-Control-Max-Age", "3600"); // 1 hora
 
-        // Responder directamente OPTIONS (preflight)
+        // Responder directamente a la petición OPTIONS (preflight)
         if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
             response.setStatus(HttpServletResponse.SC_OK);
-            response.getWriter().flush(); 
-            return;  // No seguir con el chain, solo responder preflight
+            response.getWriter().flush();
+            return;
         }
 
-        // Para los demás métodos, continuar con la cadena de filtros/servlets
+        // Continuar con la cadena de filtros/servlets para los demás métodos
         chain.doFilter(req, res);
     }
 
@@ -44,4 +54,3 @@ public class CORSFilter implements Filter {
     @Override
     public void destroy() {}
 }
-
